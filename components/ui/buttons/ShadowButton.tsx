@@ -11,7 +11,7 @@ export default function ShadowButton({children, href, onClick, disabled, classNa
     const button = <Button
         className={
             cn(
-                "h-max py-1.5 px-3",
+                "cursor-pointer h-max py-1.5 px-3 hover:!bg-border/50 hover:text-background-foreground",
                 className
             )
         }

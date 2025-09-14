@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import {Geist, Geist_Mono, Inter} from "next/font/google";
 import "./globals.css";
+import AppQueryClientProvider from "@/providers/AppQueryClientProvider";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -19,9 +20,11 @@ export default function RootLayout({
       <body
         className={`${InterFont.className} antialiased`}
       >
-        <main>
-            {children}
-        </main>
+        <AppQueryClientProvider>
+            <main>
+                {children}
+            </main>
+        </AppQueryClientProvider>
       </body>
     </html>
   );
