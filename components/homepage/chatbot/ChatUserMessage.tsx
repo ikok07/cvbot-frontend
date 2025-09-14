@@ -1,5 +1,5 @@
 import {ReactNode} from "react";
-import {Message, MessageContent} from "@/components/ui/shadcn-io/ai/message";
+import {Message, MessageAvatar, MessageContent} from "@/components/ui/shadcn-io/ai/message";
 import {cn} from "@/lib/utils";
 
 type ChatUserMessageProps = {
@@ -10,10 +10,11 @@ type ChatUserMessageProps = {
 export default function ChatUserMessage({children, className}: ChatUserMessageProps) {
     return <Message from="user">
         <MessageContent className={cn(
-            "group-[.is-user]:bg-primary/70",
+            "group-[.is-user]:bg-primary/70 animate-in slide-in-from-right-1 fade-in duration-200",
             className
         )}>
             {children}
         </MessageContent>
+        <MessageAvatar src="/user.png" name="User" />
     </Message>
 }

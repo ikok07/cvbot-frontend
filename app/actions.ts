@@ -12,10 +12,10 @@ export const fetchHistory = createServerAction(async (sessionId: string | undefi
     const params = new URLSearchParams();
     params.set("session_id", sessionId);
 
-    const {data} = await axios.get(`${process.env.BACKEND_URL}/api/v1/chatbot/history?${params.toString()}`);
+    const {data} = await axios.get(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/chatbot/history?${params.toString()}`);
     console.log(data)
     const {data: response, error} = fetchHistoryResponseSchema.safeParse(data);
     if (error) throw new Error(`Invalid response! ${error}`)
 
     return response as FetchHistoryResponse;
-})
+});

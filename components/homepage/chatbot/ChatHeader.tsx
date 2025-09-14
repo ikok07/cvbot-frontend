@@ -1,0 +1,31 @@
+"use client"
+
+import {Loader} from "@/components/ui/shadcn-io/ai/loader";
+import {cn} from "@/lib/utils";
+import ShadowButton from "@/components/ui/buttons/ShadowButton";
+import {IoReload} from "react-icons/io5";
+import {useChatbot} from "@/providers/ChatbotProvider";
+import {useViewLoaded} from "@/hooks/useViewLoaded";
+
+export default function ChatHeader() {
+    const {isLoading, isRefetching, isSuccess, handleResetChat} = useChatbot()
+
+    const {viewLoaded} = useViewLoaded();
+
+    return <div className="px-4 py-3 bg-border/20 border-b border-border flex items-center justify-between">
+        <div className="flex items-center gap-2">
+            {(isLoading || isRefetching) && viewLoaded ? <Loader size={15}/> : <div className={cn(
+                "bg-green-500 rounded-full w-2 aspect-square",
+                {
+                    "bg-red-500": !isSuccess
+                }
+            )}/>}
+            <h3 className="font-medium">Kaloyan's Assistant</h3>
+            <p className="text-xs text-secondary">| {process.env.NEXT_PUBLIC_CHATBOT_MODEL}</p>
+        </div>
+        <ShadowButton onClick={handleResetChat}>
+            <IoReload />
+            <p>Reset chat</p>
+        </ShadowButton>
+    </div>
+}

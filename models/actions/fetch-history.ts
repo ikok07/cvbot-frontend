@@ -1,11 +1,13 @@
 import {z} from "zod";
 import {baseResponseSchema} from "@/models/actions/base-response";
+import {messageSourceSchema} from "@/models/message-source";
 
 export const messageRole = z.literal(["user", "assistant", "tool"]);
 
 export const historyMessageSchema = z.object({
     role: messageRole,
-    content: z.string()
+    content: z.string(),
+    sources: z.array(messageSourceSchema).optional()
 })
 
 export const fetchHistoryResponseSchema = baseResponseSchema.extend({

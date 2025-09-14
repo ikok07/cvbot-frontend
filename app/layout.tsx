@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import {Geist, Geist_Mono, Inter} from "next/font/google";
 import "./globals.css";
 import AppQueryClientProvider from "@/providers/AppQueryClientProvider";
+import { Toaster } from "@/components/ui/sonner";
+import {IoCloseCircle} from "react-icons/io5";
 
 export const metadata: Metadata = {
   title: "Create Next App",
@@ -24,6 +26,17 @@ export default function RootLayout({
             <main>
                 {children}
             </main>
+            <Toaster
+                position="top-right"
+                toastOptions={{
+                    classNames: {
+                        error: "!bg-primary !text-background"
+                    }
+                }}
+                icons={{
+                    error: <IoCloseCircle className="text-background text-xl"/>
+                }}
+            />
         </AppQueryClientProvider>
       </body>
     </html>

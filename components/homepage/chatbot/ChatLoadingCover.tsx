@@ -1,17 +1,21 @@
 "use client"
 
 import {Loader} from "@/components/ui/shadcn-io/ai/loader";
-import {Message, MessageContent} from "@/components/ui/shadcn-io/ai/message";
 import {Skeleton} from "@/components/ui/skeleton";
 import {cn} from "@/lib/utils";
-import ChatUserMessage from "@/components/homepage/chatbot/ChatUserMessage";
 import ChatAssistantMessage from "@/components/homepage/chatbot/ChatAssistantMessage";
+import {useViewLoaded} from "@/hooks/useViewLoaded";
 
 type ChatLoadingCoverProps = {
     isLoading: boolean
 }
 
 export default function ChatLoadingCover({isLoading}: ChatLoadingCoverProps) {
+
+    const {viewLoaded} = useViewLoaded();
+
+    if (!viewLoaded) return;
+
     return <div className={cn(
         "absolute inset-0 p-5",
         {
@@ -26,7 +30,7 @@ export default function ChatLoadingCover({isLoading}: ChatLoadingCoverProps) {
                 "visible backdrop-blur-md": isLoading
             }
         )}>
-            <Loader size={30}/>
+            <Loader size={30} />
             <p className="font-bold">Loading conversation...</p>
         </div>
         <div className={cn(
@@ -36,14 +40,9 @@ export default function ChatLoadingCover({isLoading}: ChatLoadingCoverProps) {
                 "opacity-100": isLoading
             }
         )}>
-            <ChatUserMessage className="w-[50%]">
-                <Skeleton className="w-full h-[1rem] mb-2"/>
-                <Skeleton className="w-[40%] h-[1rem]"/>
-            </ChatUserMessage>
             <ChatAssistantMessage className="w-[75%] ">
                 <Skeleton className="w-full h-[1rem] mb-2 bg-secondary/10"/>
                 <Skeleton className="w-full h-[1rem] mb-2 bg-secondary/10"/>
-                <Skeleton className="w-[40%] h-[1rem] bg-secondary/10"/>
             </ChatAssistantMessage>
         </div>
     </div>
