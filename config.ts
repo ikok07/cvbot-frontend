@@ -130,6 +130,14 @@ export const PROJECTS: Project[] = [
     },
     {
         type: "web",
+        technology_ids: ["nextjs", "clerk"],
+        name: "CVBot Frontend (This website)",
+        description: "A professional portfolio website featuring an intelligent AI assistant chatbot that serves as a personal representative for client interactions. Built with modern web technologies. The AI assistant maintains professional communication standards while providing comprehensive information about skills, projects, and experience to potential employers and business contacts.",
+        githubURL: "https://github.com/ikok07/cvbot-frontend.git",
+        // liveURL: ""
+    },
+    {
+        type: "web",
         technology_ids: ["nextjs", "figma"],
         name: "Beauty Salon Appointment Booking Website",
         description: "A responsive, user-friendly web application for a nail salon, featuring a streamlined appointment booking system. The platform offers a seamless user experience across devices, integrating the Google Calendar API. The design emphasizes clarity and ease of use, ensuring clients can effortlessly schedule their manicure appointments online.",

@@ -23,7 +23,7 @@ export default function RootLayout({
         className={`${InterFont.className} antialiased`}
       >
         <AppQueryClientProvider>
-            <main>
+            <main className="relative">
                 {children}
             </main>
             <Toaster

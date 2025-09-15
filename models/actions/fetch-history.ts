@@ -7,7 +7,7 @@ export const messageRole = z.literal(["user", "assistant", "tool"]);
 export const historyMessageSchema = z.object({
     role: messageRole,
     content: z.string(),
-    sources: z.array(messageSourceSchema).optional()
+    sources: z.array(messageSourceSchema)
 })
 
 export const fetchHistoryResponseSchema = baseResponseSchema.extend({

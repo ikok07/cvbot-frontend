@@ -24,9 +24,9 @@ export default function ChatAssistantMessage({children, className, sources}: Cha
         {sources && sources.length > 0 && <Sources className="text-secondary">
             <SourcesTrigger count={sources.length} className="!text-secondary"></SourcesTrigger>
             <SourcesContent>
-                {sources.map(s => {
-                    if (s.url) return <Source title={s.name} href={s.url} />
-                    else return <Source title={s.name} />
+                {sources.map((s, index) => {
+                    if (s.url) return <Source title={s.name} href={s.url} key={index} />
+                    else return <Source title={s.name} key={index} />
                 })}
             </SourcesContent>
         </Sources>}

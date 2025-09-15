@@ -65,12 +65,11 @@ export default function ChatbotProvider({children}: ChatbotProviderProps) {
     function handleResetChat() {
         setHistoryMessages([]);
         setSessionId(uuidv4());
-        queryClient.invalidateQueries({queryKey: ["chatbot-history"]})
     }
 
     function handlePromptSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault()
-        setHistoryMessages(v => [...v, {role: "user", content: prompt}])
+        setHistoryMessages(v => [...v, {role: "user", content: prompt, sources: []}])
         setPrompt("")
         setIsReceivingMessageChunks(true);
         async function fetchData() {
@@ -81,7 +80,7 @@ export default function ChatbotProvider({children}: ChatbotProviderProps) {
                     "Content-Type": "application/json"
                 },
                 onopen: async () => {
-                    setHistoryMessages(v => [...v, {role: "assistant", content: ""}])
+                    setHistoryMessages(v => [...v, {role: "assistant", content: "", sources: []}])
                     return
                 },
                 onmessage: (ev) => {
@@ -90,7 +89,6 @@ export default function ChatbotProvider({children}: ChatbotProviderProps) {
                     if (data.type === "error") throw new Error(data.content);
 
                     if (!initialChunkReceived) setInitialChunkReceived(true);
-
 
                     if (data.type === "sources") {
                         if (!historyMessages[historyMessages.length - 1]?.sources) setHistoryMessages(v => [...v.slice(0, -1), {...v[v.length - 1], sources: []}]);
@@ -121,6 +119,7 @@ export default function ChatbotProvider({children}: ChatbotProviderProps) {
 
     useEffect(() => {
         if (!sessionId) setSessionId(uuidv4());
+        else queryClient.invalidateQueries({queryKey: ["chatbot-history"]})
     }, [sessionId]);
 
     useEffect(() => {
