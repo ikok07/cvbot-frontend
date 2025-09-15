@@ -12,15 +12,17 @@ export default function ChatHeader() {
 
     const {viewLoaded} = useViewLoaded();
 
-    return <div className="px-4 py-3 bg-border/20 border-b border-border flex items-center justify-between">
-        <div className="flex items-center gap-2">
-            {(isLoading || isRefetching) && viewLoaded ? <Loader size={15}/> : <div className={cn(
-                "bg-green-500 rounded-full w-2 aspect-square",
-                {
-                    "bg-red-500": !isSuccess
-                }
-            )}/>}
-            <h3 className="font-medium">Kaloyan's Assistant</h3>
+    return <div className="px-4 py-3 bg-border/20 border-b border-border flex flex-col md:flex-row items-center justify-between gap-y-4">
+        <div className="flex flex-col sm:flex-row items-center gap-2">
+            <div className="flex items-center gap-2">
+                {(isLoading || isRefetching) && viewLoaded ? <Loader size={15}/> : <div className={cn(
+                    "bg-green-500 rounded-full w-2 aspect-square",
+                    {
+                        "bg-red-500": !isSuccess
+                    }
+                )}/>}
+                <h3 className="font-medium">Kaloyan's Assistant</h3>
+            </div>
             <p className="text-xs text-secondary">| {process.env.NEXT_PUBLIC_CHATBOT_MODEL}</p>
         </div>
         <ShadowButton onClick={handleResetChat}>

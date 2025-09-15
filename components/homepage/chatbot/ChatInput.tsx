@@ -27,9 +27,10 @@ export default function ChatInput() {
                 value={prompt}
                 onChange={e => setPrompt(e.target.value)}
                 placeholder="Ask the assistant anything you want to know about me"
+                className="text-sm md:text-[1rem]"
             />
             <PromptInputToolbar className="flex items-center justify-between px-2 pb-2">
-                <p className="text-xs text-secondary">
+                <p className="text-[0.7rem] sm:text-xs text-secondary">
                     * The assistant's source code can be found in my <Link target="_blank" href={`${process.env.NEXT_PUBLIC_CHATBOT_REPO_URL!}`} className="text-primary hover:opacity-80">GitHub Account</Link>
                 </p>
                 <PromptInputSubmit disabled={!prompt || !isSuccess || isReceivingMessageChunks} className="cursor-pointer rounded-full"/>
