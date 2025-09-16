@@ -1,3 +1,5 @@
+"use client"
+
 import {PROJECTS, TECHNOLOGIES} from "@/config";
 import {Card} from "@/components/ui/card";
 import Image from "next/image";
@@ -7,12 +9,16 @@ import {IoLogoGithub} from "react-icons/io";
 import SecondaryButton from "@/components/ui/buttons/SecondaryButton";
 import PrimaryButton from "@/components/ui/buttons/PrimaryButton";
 import {ProjectType} from "@/models/project";
+import {useLocale} from "next-intl";
 
 type ProjectsListProps = {
     activeCategory: ProjectType
 }
 
 export default function ProjectsList({activeCategory}: ProjectsListProps) {
+
+    const locale = useLocale();
+
     return <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
         {PROJECTS.filter(p => p.type === activeCategory).map((project, index) => {
             return <Card key={index} className="grid min-h-[14rem] h-max p-0 overflow-hidden gap-0">
@@ -20,7 +26,7 @@ export default function ProjectsList({activeCategory}: ProjectsListProps) {
                 <div className="flex flex-col justify-between h-full px-3 py-3">
                     <div>
                         <h5 className="text-lg font-bold mb-2">{project.name}</h5>
-                        <ProjectDescription>{project.description}</ProjectDescription>
+                        <ProjectDescription>{locale === "bg" ? project.description.bg : project.description.en}</ProjectDescription>
                     </div>
                     <div className="flex items-center justify-between mt-5">
                         <div className="flex items-center flex-wrap gap-3">

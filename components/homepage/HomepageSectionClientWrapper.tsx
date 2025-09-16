@@ -14,7 +14,7 @@ export default function HomepageSectionClientWrapper({children, sectionId}: Home
     const {ref, inView} = useInView({threshold: 1});
 
     useEffect(() => {
-        if (window.location.hash != `#${sectionId}` && !userSectionSelectionEnabled) window.location.hash = sectionId
+        if (inView && window.location.hash != `#${sectionId}` && !userSectionSelectionEnabled) window.location.hash = sectionId
     }, [inView, userSectionSelectionEnabled]);
 
     return <div ref={ref}>

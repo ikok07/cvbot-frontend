@@ -2,22 +2,23 @@ import {
     createContext,
     Dispatch,
     FormEvent,
-    ReactNode,
+    ReactNode, Ref,
     SetStateAction,
     useContext,
     useEffect,
-    useMemo,
+    useMemo, useRef,
     useState
 } from "react";
 import {HistoryMessage} from "@/models/actions/fetch-history";
 import {useLocalStorage} from "@/hooks/use-local-storage";
 import useErrorQuery from "@/hooks/useErrorQuery";
-import {fetchHistory} from "@/app/actions";
+import {fetchHistory} from "@/app/[locale]/actions";
 import {v4 as uuidv4} from "uuid";
 import { useQueryClient } from "@tanstack/react-query";
 import {fetchEventSource} from "@microsoft/fetch-event-source";
 import {messageChunkSchema} from "@/models/message-chunk";
 import {toast} from "sonner";
+import {useStickToBottomContext} from "use-stick-to-bottom";
 
 export type ChatbotState = {
     prompt: string,
@@ -32,7 +33,7 @@ export type ChatbotState = {
     initialChunkReceived: boolean,
     setInitialChunkReceived: Dispatch<SetStateAction<boolean>>,
     handleResetChat: () => void,
-    handlePromptSubmit: (e: FormEvent<HTMLFormElement>) => void
+    handlePromptSubmit: (e: FormEvent<HTMLFormElement>) => void,
 }
 
 const Context = createContext<ChatbotState | null>(null)
@@ -43,6 +44,7 @@ type ChatbotProviderProps = {
 
 export default function ChatbotProvider({children}: ChatbotProviderProps) {
     const queryClient = useQueryClient();
+
     const [prompt, setPrompt] = useState("");
     const [historyMessages, setHistoryMessages] = useState<HistoryMessage[]>([])
 
@@ -69,9 +71,10 @@ export default function ChatbotProvider({children}: ChatbotProviderProps) {
 
     function handlePromptSubmit(e: FormEvent<HTMLFormElement>) {
         e.preventDefault()
-        setHistoryMessages(v => [...v, {role: "user", content: prompt, sources: []}])
+
         setPrompt("")
         setIsReceivingMessageChunks(true);
+
         async function fetchData() {
             await fetchEventSource(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/chatbot/invoke`, {
                 method: "POST",
@@ -79,8 +82,19 @@ export default function ChatbotProvider({children}: ChatbotProviderProps) {
                 headers: {
                     "Content-Type": "application/json"
                 },
-                onopen: async () => {
-                    setHistoryMessages(v => [...v, {role: "assistant", content: "", sources: []}])
+                onopen: async (res) => {
+                    if (!res.ok) {
+                        if (res.status === 429) toast.error("Whoah! You asked the assistant too many times in a short period of time. Please wait a few seconds before trying again.")
+                        else toast.error("The message could not be sent!")
+                        return
+                    }
+                    setHistoryMessages(v => {
+                        return [
+                            ...v,
+                            {role: "user", content: prompt, sources: []},
+                            {role: "assistant", content: "", sources: []}
+                        ]
+                    })
                     return
                 },
                 onmessage: (ev) => {
@@ -118,6 +132,7 @@ export default function ChatbotProvider({children}: ChatbotProviderProps) {
     }
 
     useEffect(() => {
+        console.log(sessionId)
         if (!sessionId) setSessionId(uuidv4());
         else queryClient.invalidateQueries({queryKey: ["chatbot-history"]})
     }, [sessionId]);

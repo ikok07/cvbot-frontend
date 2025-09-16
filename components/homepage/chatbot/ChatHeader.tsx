@@ -6,11 +6,12 @@ import ShadowButton from "@/components/ui/buttons/ShadowButton";
 import {IoReload} from "react-icons/io5";
 import {useChatbot} from "@/providers/ChatbotProvider";
 import {useViewLoaded} from "@/hooks/useViewLoaded";
+import {useTranslations} from "next-intl";
 
 export default function ChatHeader() {
-    const {isLoading, isRefetching, isSuccess, handleResetChat} = useChatbot()
-
+    const t = useTranslations("Home.Assistant");
     const {viewLoaded} = useViewLoaded();
+    const {isLoading, isRefetching, isSuccess, handleResetChat} = useChatbot()
 
     return <div className="px-4 py-3 bg-border/20 border-b border-border flex flex-col md:flex-row items-center justify-between gap-y-4">
         <div className="flex flex-col sm:flex-row items-center gap-2">
@@ -21,13 +22,13 @@ export default function ChatHeader() {
                         "bg-red-500": !isSuccess
                     }
                 )}/>}
-                <h3 className="font-medium">Kaloyan's Assistant</h3>
+                <h3 className="font-medium">{t("assistantName")}</h3>
             </div>
             <p className="text-xs text-secondary">| {process.env.NEXT_PUBLIC_CHATBOT_MODEL}</p>
         </div>
         <ShadowButton onClick={handleResetChat}>
             <IoReload />
-            <p>Reset chat</p>
+            <p>{t("resetChatBtn")}</p>
         </ShadowButton>
     </div>
 }

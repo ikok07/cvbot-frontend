@@ -5,19 +5,24 @@ import FooterColumnHeading from "@/components/homepage/footer/FooterColumnHeadin
 import FooterIconRow from "@/components/homepage/footer/FooterIconRow";
 import {IoLogoGithub, IoLogoInstagram, IoLogoLinkedin} from "react-icons/io";
 import {IoCall, IoMail} from "react-icons/io5";
+import {getTranslations} from "next-intl/server";
 
-export default function HomepageFooter() {
+export default async function HomepageFooter() {
+
+    const tCommon = await getTranslations("Home.Common");
+    const t = await getTranslations("Home.Footer");
+
     return <footer>
         <Footer className="bg-primary text-primary-foreground">
             <FooterContent className="grid-cols-1 sm:grid-cols-2 md:grid-cols-3 w-[95%] mx-auto">
                 <FooterColumn className="lg:col-start-2">
-                    <FooterColumnHeading>Навигация</FooterColumnHeading>
+                    <FooterColumnHeading>{t("navigationHeading")}</FooterColumnHeading>
                     <FooterRows>
                         <FooterNavLinks />
                     </FooterRows>
                 </FooterColumn>
                 <FooterColumn>
-                    <FooterColumnHeading>Контакти</FooterColumnHeading>
+                    <FooterColumnHeading>{t("contactHeading")}</FooterColumnHeading>
                     <FooterRows>
                         <FooterIconRow
                             /* @ts-ignore */
@@ -36,28 +41,28 @@ export default function HomepageFooter() {
                     </FooterRows>
                 </FooterColumn>
                 <FooterColumn>
-                    <FooterColumnHeading>Социални мрежи</FooterColumnHeading>
+                    <FooterColumnHeading>{t("socialMediaHeading")}</FooterColumnHeading>
                     <FooterRows>
                         <FooterIconRow
                             /* @ts-ignore */
                             Icon={IoLogoLinkedin}
                             href={process.env.NEXT_PUBLIC_LINKEDIN_PROFILE_URL!}
                         >
-                            LinkedIn Account
+                            LinkedIn {tCommon("accountCapital")}
                         </FooterIconRow>
                         <FooterIconRow
                             /* @ts-ignore */
                             Icon={IoLogoGithub}
                             href={process.env.NEXT_PUBLIC_GITHUB_PROFILE_URL!}
                         >
-                            GitHub Account
+                            GitHub {tCommon("accountCapital")}
                         </FooterIconRow>
                         <FooterIconRow
                             /* @ts-ignore */
                             Icon={IoLogoInstagram}
                             href={process.env.NEXT_PUBLIC_INSTAGRAM_PROFILE_URL!}
                         >
-                            Instagram Account
+                            Instagram {tCommon("accountCapital")}
                         </FooterIconRow>
                     </FooterRows>
                 </FooterColumn>

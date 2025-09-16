@@ -5,7 +5,7 @@ import HomepageNavigation from "@/components/homepage/nav/HomepageNavigation";
 import HomepageNavigationProvider from "@/providers/HomepageNavigationProvider";
 import HomepageFooter from "@/components/homepage/footer/HomepageFooter";
 
-export default function Home() {
+export default async function Home() {
   return <HomepageNavigationProvider>
       <div className="space-y-20 md:pt-20">
           <HomepageNavigation />

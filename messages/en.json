@@ -1,0 +1,50 @@
+{
+  "Metadata": {
+    "title": "Kaloyan Stefanov - Full-Stack, AI, and Embedded Systems Developer",
+    "description": "I'm a developer with three years of experience, evolving from web and backend development to exploring Swift for mobile, and now innovating in AI and embedded systems with LangChain, Python, and STM32.",
+    "author": "Kaloyan Stefanov"
+  },
+  "Home": {
+    "Navigation": {
+      "home": "Home",
+      "assistant": "Assistant",
+      "projects": "Projects"
+    },
+    "Hero": {
+      "label": "Hello there!",
+      "title": "I'm <name>Kaloyan</name>, a Full-Stack, AI, and Embedded Systems Developer.",
+      "subtitle": "I'm a developer with three years of experience, evolving from web and backend development to exploring Swift for mobile, and now innovating in AI and embedded systems with LangChain, Python, and STM32.",
+      "askAssistantBtn": "Ask my assistant",
+      "downloadCVBtn": "Download my CV"
+    },
+    "Assistant": {
+      "label": "My assistant",
+      "title": "All you need to know about me",
+      "subtitle": "Chat with my Custom-Built AI Buddy, Designed to Answer All Your Questions About Me!",
+      "assistantName": "Kaloyan's Assistant",
+      "resetChatBtn": "Reset chat",
+      "usedSources": "{count, plural, one {Used {count} source} other {Used {count} sources}}",
+      "inputPlaceholder": "Ask the assistant anything you want to know about me",
+      "chatbotNotice": "* The assistant's source code can be found in my <a>GitHub Account</a>"
+    },
+    "Projects": {
+      "label": "Projects",
+      "title": "Discover my experience",
+      "subtitle": "Explore the projects I've built over the past year",
+      "chooseCategoryLabel": "Choose project category",
+      "technologiesLabel": "Technologies I have worked with"
+    },
+    "Footer": {
+      "navigationHeading": "Navigation",
+      "contactHeading": "Contact",
+      "socialMediaHeading": "Social Media"
+    },
+    "Errors": {
+      "quotaExceededError": "Whoah! You asked the assistant too many times in a short period of time. Please wait a few seconds before trying again.",
+      "genericChatbotError": "The message could not be sent!"
+    },
+    "Common": {
+      "accountCapital": "Account"
+    }
+  }
+}

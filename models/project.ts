@@ -7,7 +7,10 @@ export type Project = {
     technology_ids: SupportedTechnologyId[],
     image?: string,
     name: string,
-    description: string,
+    description: {
+        en: string,
+        bg: string
+    },
     githubURL?: string,
     liveURL?: string,
 }

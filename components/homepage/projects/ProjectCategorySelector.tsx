@@ -1,6 +1,9 @@
+"use client"
+
 import ProjectCategoryButton from "@/components/homepage/projects/ProjectCategoryButton";
 import {ProjectType} from "@/models/project";
 import {Dispatch, SetStateAction} from "react";
+import {useTranslations} from "next-intl";
 
 type ProjectCategorySelectorProps = {
     activeCategory: ProjectType,
@@ -8,8 +11,10 @@ type ProjectCategorySelectorProps = {
 }
 
 export default function ProjectCategorySelector({activeCategory, setActiveCategory}: ProjectCategorySelectorProps) {
+    const t = useTranslations("Home.Projects");
+
     return <div className="mx-auto mt-10">
-        <h4 className="text-center font-semibold mb-5">Choose project category</h4>
+        <h4 className="text-center font-semibold mb-5">{t("chooseCategoryLabel")}</h4>
         <div className="flex items-center justify-center flex-wrap gap-5 w-full">
             <ProjectCategoryButton category="web" activeCategory={activeCategory} setActiveCategory={setActiveCategory}>
                 🌎 Web

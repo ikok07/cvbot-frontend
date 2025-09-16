@@ -113,6 +113,31 @@ html {
   animation-delay: 1s;
 }
 
+.markdown {
+  h3 {
+    strong {
+      @apply font-black
+    }
+    @apply text-xl font-bold
+  }
+  h4 {
+    strong {
+      @apply font-medium
+    }
+    @apply text-lg font-medium
+  }
+  ul {
+    li {
+      @apply list-inside list-disc
+    }
+    @apply space-y-1
+  }
+  a {
+    @apply text-primary underline font-medium
+  }
+  @apply space-y-5;
+}
+
 @keyframes scrolling {
   0% {
     transform: translateX(0);
