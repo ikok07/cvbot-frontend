@@ -1,36 +1,46 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# CVBot Frontend
 
-## Getting Started
+A modern, user-friendly frontend for the [CVBot application](https://github.com/ikok07/cvbot-backend.git), built to provide seamless interaction with the AI-powered personal assistant backend. The frontend enables users to interact with the AI chatbot and access professional profile information through an intuitive interface.
 
-First, run the development server:
+**🚀 Features**
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Interactive UI: Built with Next.js 15 and shadcn/ui components for a sleek, responsive design.
+- Multilingual Support: Internationalization (i18n) powered by Next-Intl, supporting English (en) and Bulgarian (bg).
+- Secure Authentication: Clerk integration for robust user authentication.
+- AI Chatbot: Real-time interaction with the AI-powered chatbot for professional queries.
+- Responsive Design: Optimized for both desktop and mobile devices.
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+**🛠️ Tech Stack**
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- Framework: Next.js 15 (App Router)
+- UI Components: shadcn/ui (built on Tailwind CSS and Radix UI)
+- Internationalization: Next-Intl
+- Authentication: Clerk
+- Styling: Tailwind CSS
+- Language: TypeScript
+- API Client: Fetch API for communicating with the CVBot Backend
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+**🌎 Internationalization**
 
-## Learn More
+Next-Intl provides multi-language support with locale switching for English (en) and Bulgarian (bg).
 
-To learn more about Next.js, take a look at the following resources:
+Translations are managed in JSON files under the /messages directory (en.json and bg.json).
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**🔐 Security (Currently Only for token generation)**
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+Authentication: Clerk ensures secure user authentication with OAuth and JWT-based sessions.
 
-## Deploy on Vercel
+**💻 Installation**
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+1. Clone the repository `git clone <repository-url>`
+2. Navigate to project's folder `cd cvbot-frontend`
+3. Install dependencies `npm install`
+4. Copy `.env.example` to `.env` and configure the required environment variables
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**👨‍💻 Author**
+
+Originally built by Kaloyan Stefanov.
+
+**🔗 Backend**
+
+This frontend is designed to work with the [CVBot Backend](https://github.com/ikok07/cvbot-backend.git). Ensure the backend is running and accessible at the configured NEXT_PUBLIC_BACKEND_URL.
