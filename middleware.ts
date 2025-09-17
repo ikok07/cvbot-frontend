@@ -1,7 +1,13 @@
 import createMiddleware from "next-intl/middleware";
+import {clerkMiddleware, createRouteMatcher} from "@clerk/nextjs/server"
 import {routing} from "@/i18n/routing";
 
-export default createMiddleware(routing);
+const isProtectedRoute = createRouteMatcher(["/:locale/admin(.*)", "/admin(.*)"]);
+
+export default clerkMiddleware(async (auth, req) => {
+    if (isProtectedRoute(req)) await auth.protect()
+    return createMiddleware(routing)(req);
+})
 
 export const config = {
     // Match all pathnames except for

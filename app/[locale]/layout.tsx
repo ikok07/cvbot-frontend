@@ -6,6 +6,7 @@ import { Toaster } from "@/components/ui/sonner";
 import {IoCloseCircle} from "react-icons/io5";
 import {NextIntlClientProvider} from "next-intl";
 import {getTranslations} from "next-intl/server";
+import {ClerkProvider} from "@clerk/nextjs";
 
 type MetadataProps = {
     params: {
@@ -44,10 +45,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body
-        className={`${InterFont.className} antialiased`}
-      >
+    <ClerkProvider>
+        <html lang="en">
+        <body
+            className={`${InterFont.className} antialiased`}
+        >
         <NextIntlClientProvider>
             <AppQueryClientProvider>
                 <main className="relative">
@@ -66,7 +68,8 @@ export default function RootLayout({
                 />
             </AppQueryClientProvider>
         </NextIntlClientProvider>
-      </body>
-    </html>
+        </body>
+        </html>
+    </ClerkProvider>
   );
 }

@@ -10,6 +10,7 @@
     "format": "biome format --write"
   },
   "dependencies": {
+    "@clerk/nextjs": "^6.32.0",
     "@icons-pack/react-simple-icons": "^13.7.0",
     "@microsoft/fetch-event-source": "^2.0.1",
     "@radix-ui/react-avatar": "^1.1.10",
