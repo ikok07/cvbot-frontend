@@ -7,7 +7,7 @@ import HomepageFooter from "@/components/homepage/footer/HomepageFooter";
 
 export default async function Home() {
   return <HomepageNavigationProvider>
-      <div className="space-y-20 md:pt-20">
+      <div className="relative space-y-20 md:pt-20">
           <HomepageNavigation />
           <Hero />
           <Chatbot />

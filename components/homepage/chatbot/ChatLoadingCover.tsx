@@ -5,14 +5,15 @@ import {Skeleton} from "@/components/ui/skeleton";
 import {cn} from "@/lib/utils";
 import ChatAssistantMessage from "@/components/homepage/chatbot/ChatAssistantMessage";
 import {useViewLoaded} from "@/hooks/useViewLoaded";
+import {useTranslations} from "next-intl";
 
 type ChatLoadingCoverProps = {
     isLoading: boolean
 }
 
 export default function ChatLoadingCover({isLoading}: ChatLoadingCoverProps) {
-
     const {viewLoaded} = useViewLoaded();
+    const t = useTranslations("Home.Assistant")
 
     if (!viewLoaded) return;
 
@@ -31,7 +32,7 @@ export default function ChatLoadingCover({isLoading}: ChatLoadingCoverProps) {
             }
         )}>
             <Loader size={30} />
-            <p className="font-bold">Loading conversation...</p>
+            <p className="font-bold">{t("loadingConversation")}</p>
         </div>
         <div className={cn(
             "transition-all duration-100",

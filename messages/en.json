@@ -25,7 +25,9 @@
       "resetChatBtn": "Reset chat",
       "usedSources": "{count, plural, one {Used {count} source} other {Used {count} sources}}",
       "inputPlaceholder": "Ask the assistant anything you want to know about me",
-      "chatbotNotice": "* The assistant's source code can be found in my <a>GitHub Account</a>"
+      "chatbotNotice": "* The assistant's source code can be found in my <a>GitHub Account</a>",
+      "loadingConversation": "Loading conversation...",
+      "chatbotCouldNotBeLoaded": "The chatbot could not be loaded!"
     },
     "Projects": {
       "label": "Projects",
@@ -44,7 +46,14 @@
       "genericChatbotError": "The message could not be sent!"
     },
     "Common": {
-      "accountCapital": "Account"
+      "accountCapital": "Account",
+      "somethingWentWrong": "Something went wrong"
+    }
+  },
+  "Common": {
+    "Locales": {
+      "en": "English",
+      "bg": "Bulgarian"
     }
   }
 }

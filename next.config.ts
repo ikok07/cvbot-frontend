@@ -19,6 +19,10 @@ const nextConfig: NextConfig = {
           {
               protocol: "https",
               hostname: "academy.imnextgen.bg",
+          },
+          {
+              protocol: "https",
+              hostname: "flagcdn.com",
           }
       ]
   }

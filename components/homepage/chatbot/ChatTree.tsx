@@ -11,6 +11,7 @@ import GeneratingResponseMessage from "@/components/homepage/chatbot/GeneratingR
 import {useViewLoaded} from "@/hooks/useViewLoaded";
 import {useStickToBottomContext} from "use-stick-to-bottom";
 import {useEffect} from "react";
+import {useTranslations} from "next-intl";
 
 export default function ChatTree() {
     const {isLoading, isRefetching} = useChatbot();
@@ -28,6 +29,8 @@ export default function ChatTree() {
 
 function InnerContent() {
     const {viewLoaded} = useViewLoaded();
+    const t = useTranslations("Home.Assistant");
+    const tCommon = useTranslations("Home.Common");
     const {isSuccess, isReceivingMessageChunks, initialChunkReceived, historyMessages} = useChatbot();
     const {scrollToBottom} = useStickToBottomContext()
 
@@ -53,8 +56,8 @@ function InnerContent() {
         <ChatAlertMessage
             // @ts-ignore
             Icon={IoCloseCircleOutline}
-            title="Something went wrong"
-            description="The chatbot could not be loaded!"
+            title={tCommon("somethingWentWrong")}
+            description={t("chatbotCouldNotBeLoaded")}
         />
 
     useEffect(() => {

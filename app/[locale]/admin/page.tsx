@@ -1,5 +1,4 @@
 import {auth, currentUser} from "@clerk/nextjs/server";
-import PrimaryButton from "@/components/ui/buttons/PrimaryButton";
 import CopyJwtTokenButton from "@/components/admin/CopyJWTTokenButton";
 
 export default async function Page() {

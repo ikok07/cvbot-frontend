@@ -46,7 +46,7 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-        <html lang="en">
+        <html lang="en" className="no-scrollbar">
         <body
             className={`${InterFont.className} antialiased`}
         >
