@@ -19,6 +19,7 @@ import {fetchEventSource} from "@microsoft/fetch-event-source";
 import {messageChunkSchema} from "@/models/message-chunk";
 import {toast} from "sonner";
 import {useStickToBottomContext} from "use-stick-to-bottom";
+import {useLocale} from "next-intl";
 
 export type ChatbotState = {
     prompt: string,
@@ -44,6 +45,7 @@ type ChatbotProviderProps = {
 
 export default function ChatbotProvider({children}: ChatbotProviderProps) {
     const queryClient = useQueryClient();
+    const locale = useLocale();
 
     const [prompt, setPrompt] = useState("");
     const [historyMessages, setHistoryMessages] = useState<HistoryMessage[]>([])
@@ -54,7 +56,7 @@ export default function ChatbotProvider({children}: ChatbotProviderProps) {
     const [sessionId, setSessionId] = useLocalStorage<string | null>("chatbot-session", null)
 
     const {data, isLoading, isRefetching, isSuccess} = useErrorQuery({
-        queryFn: () => fetchHistory(sessionId!),
+        queryFn: () => fetchHistory(sessionId!, locale),
         queryKey: ["chatbot-history"],
         staleTime: 0,
         enabled: !!sessionId
