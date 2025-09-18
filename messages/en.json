@@ -13,7 +13,7 @@
     "Hero": {
       "label": "Hello there!",
       "title": "I'm <name>Kaloyan</name>, a Full-Stack, AI, and Embedded Systems Developer.",
-      "subtitle": "I'm a developer with three years of experience, evolving from web and backend development to exploring Swift for mobile, and now innovating in AI and embedded systems with LangChain, Python, and STM32.",
+      "subtitle": "I became interested in programming three years ago, progressing from web and backend development to exploring Swift for mobile. I am now innovating in AI and embedded systems using LangChain, Python and STM32.",
       "askAssistantBtn": "Ask my assistant",
       "downloadCVBtn": "Download my CV"
     },
