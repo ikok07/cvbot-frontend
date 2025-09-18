@@ -13,6 +13,6 @@ export default function HeroButtons() {
 
     return <div className="flex flex-col sm:flex-row items-center gap-3 mx-auto w-max">
         <PrimaryButton href={`/${locale === "en" ? "" : locale}#assistant`} onClick={() => setUserSectionSelectionEnabled(true)}>{t("askAssistantBtn")}</PrimaryButton>
-        <SecondaryButton className="bg-transparent border border-secondary/10 text-secondary shadow-none hover:bg-secondary/5">{t("downloadCVBtn")}</SecondaryButton>
+        <SecondaryButton className="bg-transparent border border-secondary/10 text-secondary shadow-none hover:bg-secondary/5" href="/kaloyan_stefanov.pdf" download="kaloyan_stefanov.pdf">{t("downloadCVBtn")}</SecondaryButton>
     </div>
 }
