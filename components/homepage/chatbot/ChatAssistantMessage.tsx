@@ -33,7 +33,7 @@ export default function ChatAssistantMessage({children, className, sources}: Cha
                             }
                         }}
                     >
-                        {children.toString()}
+                        {children.toString().replace("```", '').replace("markdown", '')}
                     </Markdown>
                 }
             </MessageContent>

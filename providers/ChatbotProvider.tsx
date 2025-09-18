@@ -56,13 +56,14 @@ export default function ChatbotProvider({children}: ChatbotProviderProps) {
     const {data, isLoading, isRefetching, isSuccess} = useErrorQuery({
         queryFn: () => fetchHistory(sessionId!),
         queryKey: ["chatbot-history"],
+        staleTime: 0,
         enabled: !!sessionId
     });
 
     const messageHistory = useMemo(() => {
         if (!data?.success) return []
         return data.value.data;
-    }, [isLoading, isSuccess]);
+    }, [data, isLoading, isSuccess]);
 
     function handleResetChat() {
         setHistoryMessages([]);
@@ -76,6 +77,7 @@ export default function ChatbotProvider({children}: ChatbotProviderProps) {
         setIsReceivingMessageChunks(true);
 
         async function fetchData() {
+            setHistoryMessages(v => [...v, {role: "user", content: prompt, sources: []}])
             await fetchEventSource(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/chatbot/invoke`, {
                 method: "POST",
                 body: JSON.stringify({message: prompt, session_id: sessionId}),
@@ -91,7 +93,6 @@ export default function ChatbotProvider({children}: ChatbotProviderProps) {
                     setHistoryMessages(v => {
                         return [
                             ...v,
-                            {role: "user", content: prompt, sources: []},
                             {role: "assistant", content: "", sources: []}
                         ]
                     })
@@ -132,6 +133,7 @@ export default function ChatbotProvider({children}: ChatbotProviderProps) {
     }
 
     useEffect(() => {
+        console.log("SESSION ID CHANGED")
         console.log(sessionId)
         if (!sessionId) setSessionId(uuidv4());
         else queryClient.invalidateQueries({queryKey: ["chatbot-history"]})
