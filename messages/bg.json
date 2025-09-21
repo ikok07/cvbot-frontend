@@ -27,7 +27,8 @@
       "inputPlaceholder": "Попитайте асистента всичко, което искате да знаете за мен",
       "chatbotNotice": "* Изходният код на асистента може да бъде намерен в моя <a>GitHub акаунт</a>",
       "loadingConversation": "Зареждане на чат...",
-      "chatbotCouldNotBeLoaded": "Асистентът не може да бъде зареден!"
+      "chatbotCouldNotBeLoaded": "Асистентът не може да бъде зареден!",
+      "suggestions": "Предложения"
     },
     "Projects": {
       "label": "Проекти",

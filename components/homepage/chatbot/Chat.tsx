@@ -5,6 +5,7 @@ import ChatHeader from "@/components/homepage/chatbot/ChatHeader";
 import ChatbotProvider from "@/providers/ChatbotProvider";
 import ChatInput from "@/components/homepage/chatbot/ChatInput";
 import ChatTree from "@/components/homepage/chatbot/ChatTree";
+import ChatSuggestions from "@/components/homepage/chatbot/ChatSuggestions";
 
 export default function Chat() {
 
@@ -13,6 +14,7 @@ export default function Chat() {
             <Card className="p-0 overflow-hidden gap-0">
                 <ChatHeader />
                 <ChatTree />
+                <ChatSuggestions />
                 <ChatInput />
             </Card>
         </div>

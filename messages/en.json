@@ -27,7 +27,8 @@
       "inputPlaceholder": "Ask the assistant anything you want to know about me",
       "chatbotNotice": "* The assistant's source code can be found in my <a>GitHub Account</a>",
       "loadingConversation": "Loading conversation...",
-      "chatbotCouldNotBeLoaded": "The chatbot could not be loaded!"
+      "chatbotCouldNotBeLoaded": "The chatbot could not be loaded!",
+      "suggestions": "Suggestions"
     },
     "Projects": {
       "label": "Projects",

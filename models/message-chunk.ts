@@ -17,6 +17,11 @@ export const messageChunkSourcesSchema = z.object({
     type: z.literal("sources")
 });
 
+export const suggestionsChunkContentSchema = z.object({
+    content: z.array(z.string()),
+    type: z.literal("suggestion")
+});
+
 export const messageChunkErrorSchema = z.object({
     content: z.string(),
     type: z.literal("error")
@@ -25,9 +30,11 @@ export const messageChunkErrorSchema = z.object({
 export const messageChunkSchema = messageChunkContentSchema
     .or(messageChunkSourcesSchema)
     .or(messageChunkErrorSchema)
+    .or(suggestionsChunkContentSchema)
 
 export type MessageSource = z.infer<typeof messageSourceSchema>;
 export type MessageChunkContent = z.infer<typeof messageChunkContentSchema>;
 export type MessageChunkSources = z.infer<typeof messageChunkSourcesSchema>;
+export type MessageChunkSuggestions = z.infer<typeof suggestionsChunkContentSchema>;
 export type MessageChunkError = z.infer<typeof messageChunkErrorSchema>;
 export type MessageChunkSchema = z.infer<typeof messageChunkSchema>;

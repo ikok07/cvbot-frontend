@@ -3,7 +3,7 @@ import {
     Dispatch,
     FormEvent,
     ReactNode, Ref,
-    SetStateAction,
+    SetStateAction, useCallback,
     useContext,
     useEffect,
     useMemo, useRef,
@@ -18,7 +18,6 @@ import { useQueryClient } from "@tanstack/react-query";
 import {fetchEventSource} from "@microsoft/fetch-event-source";
 import {messageChunkSchema} from "@/models/message-chunk";
 import {toast} from "sonner";
-import {useStickToBottomContext} from "use-stick-to-bottom";
 import {useLocale} from "next-intl";
 
 export type ChatbotState = {
@@ -29,11 +28,14 @@ export type ChatbotState = {
     isSuccess: boolean,
     historyMessages: HistoryMessage[],
     setHistoryMessages: Dispatch<SetStateAction<HistoryMessage[]>>,
+    suggestions: string[],
+    setSuggestions: Dispatch<SetStateAction<string[]>>,
     isReceivingMessageChunks: boolean,
     setIsReceivingMessageChunks: Dispatch<SetStateAction<boolean>>,
     initialChunkReceived: boolean,
     setInitialChunkReceived: Dispatch<SetStateAction<boolean>>,
     handleResetChat: () => void,
+    handleApplySuggestion: (input: string) => void
     handlePromptSubmit: (e: FormEvent<HTMLFormElement>) => void,
 }
 
@@ -48,7 +50,8 @@ export default function ChatbotProvider({children}: ChatbotProviderProps) {
     const locale = useLocale();
 
     const [prompt, setPrompt] = useState("");
-    const [historyMessages, setHistoryMessages] = useState<HistoryMessage[]>([])
+    const [historyMessages, setHistoryMessages] = useState<HistoryMessage[]>([]);
+    const [suggestions, setSuggestions] = useState<string[]>([]);
 
     const [isReceivingMessageChunks, setIsReceivingMessageChunks] = useState(false);
     const [initialChunkReceived, setInitialChunkReceived] = useState(false);
@@ -67,71 +70,84 @@ export default function ChatbotProvider({children}: ChatbotProviderProps) {
         return data.value.data;
     }, [data, isLoading, isSuccess]);
 
+    const fetchData = useCallback(async (input: string) => {
+        setHistoryMessages(v => [...v, {role: "user", content: input, sources: []}])
+        await fetchEventSource(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/chatbot/invoke`, {
+            method: "POST",
+            body: JSON.stringify({message: input, session_id: sessionId}),
+            headers: {
+                "Content-Type": "application/json"
+            },
+            onopen: async (res) => {
+                if (!res.ok) {
+                    if (res.status === 429) toast.error("Whoah! You asked the assistant too many times in a short period of time. Please wait a few seconds before trying again.")
+                    else toast.error("The message could not be sent!")
+                    return
+                }
+                setHistoryMessages(v => {
+                    return [
+                        ...v,
+                        {role: "assistant", content: "", sources: []}
+                    ]
+                })
+                return
+            },
+            onmessage: (ev) => {
+                const {data, error} = messageChunkSchema.safeParse(JSON.parse(ev.data));
+                if (error) throw new Error(`Invalid message chunk! ${ev.data}`);
+                if (data.type === "error") throw new Error(data.content);
+
+                if (!initialChunkReceived) setInitialChunkReceived(true);
+
+                if (data.type === "sources") {
+                    if (!historyMessages[historyMessages.length - 1]?.sources) setHistoryMessages(v => [...v.slice(0, -1), {...v[v.length - 1], sources: []}]);
+                    setHistoryMessages(v => [...v.slice(0, -1), {...v[v.length - 1], sources: v[v.length - 1].sources!.concat(data.content)}])
+                    return
+                }
+
+                if (data.type === "suggestion") {
+                    setSuggestions(data.content)
+                    return
+                }
+
+                setHistoryMessages(v => [...v.slice(0, -1), {...v[v.length - 1], content: v[v.length - 1].content + data.content}])
+            },
+            onclose: () => {
+                setIsReceivingMessageChunks(false);
+                setInitialChunkReceived(false);
+            },
+            onerror: (err) => {
+                console.log(err);
+                setIsReceivingMessageChunks(false);
+                setInitialChunkReceived(false);
+                setHistoryMessages(v => v.slice(0, -1))
+                if (err instanceof Error) {
+                    toast.error(err.message)
+                }
+                throw err
+            },
+        })
+    }, [])
+
     function handleResetChat() {
         setHistoryMessages([]);
         setSessionId(uuidv4());
     }
 
-    function handlePromptSubmit(e: FormEvent<HTMLFormElement>) {
-        e.preventDefault()
-
-        setPrompt("")
+    function handleApplySuggestion(input: string) {
+        fetchData(input);
+        setSuggestions([]);
         setIsReceivingMessageChunks(true);
+    }
 
-        async function fetchData() {
-            setHistoryMessages(v => [...v, {role: "user", content: prompt, sources: []}])
-            await fetchEventSource(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/chatbot/invoke`, {
-                method: "POST",
-                body: JSON.stringify({message: prompt, session_id: sessionId}),
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                onopen: async (res) => {
-                    if (!res.ok) {
-                        if (res.status === 429) toast.error("Whoah! You asked the assistant too many times in a short period of time. Please wait a few seconds before trying again.")
-                        else toast.error("The message could not be sent!")
-                        return
-                    }
-                    setHistoryMessages(v => {
-                        return [
-                            ...v,
-                            {role: "assistant", content: "", sources: []}
-                        ]
-                    })
-                    return
-                },
-                onmessage: (ev) => {
-                    const {data, error} = messageChunkSchema.safeParse(JSON.parse(ev.data));
-                    if (error) throw new Error(`Invalid message chunk! ${ev.data}`);
-                    if (data.type === "error") throw new Error(data.content);
+    function handlePromptSubmit(e: FormEvent<HTMLFormElement>) {
+        e.preventDefault();
 
-                    if (!initialChunkReceived) setInitialChunkReceived(true);
+        fetchData(prompt);
 
-                    if (data.type === "sources") {
-                        if (!historyMessages[historyMessages.length - 1]?.sources) setHistoryMessages(v => [...v.slice(0, -1), {...v[v.length - 1], sources: []}]);
-                        setHistoryMessages(v => [...v.slice(0, -1), {...v[v.length - 1], sources: v[v.length - 1].sources!.concat(data.content)}])
-                        return
-                    }
-
-                    setHistoryMessages(v => [...v.slice(0, -1), {...v[v.length - 1], content: v[v.length - 1].content + data.content}])
-                },
-                onclose: () => {
-                    setIsReceivingMessageChunks(false);
-                    setInitialChunkReceived(false);
-                },
-                onerror: (err) => {
-                    console.log(err);
-                    setIsReceivingMessageChunks(false);
-                    setInitialChunkReceived(false);
-                    setHistoryMessages(v => v.slice(0, -1))
-                    if (err instanceof Error) {
-                        toast.error(err.message)
-                    }
-                    throw err
-                },
-            })
-        }
-        fetchData()
+        setPrompt("");
+        setSuggestions([]);
+        setIsReceivingMessageChunks(true);
     }
 
     useEffect(() => {
@@ -153,11 +169,14 @@ export default function ChatbotProvider({children}: ChatbotProviderProps) {
         setPrompt,
         historyMessages,
         setHistoryMessages,
+        suggestions,
+        setSuggestions,
         isReceivingMessageChunks,
         setIsReceivingMessageChunks,
         initialChunkReceived,
         setInitialChunkReceived,
         handleResetChat,
+        handleApplySuggestion,
         handlePromptSubmit
     }}>
         {children}
