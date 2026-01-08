@@ -6,6 +6,7 @@ export type SupportedTechnologyId =
     | "clerk"
     | "neondb"
     | "golang"
+    | "rust"
     | "clang"
     | "stm32"
     | "kicad"

@@ -1,6 +1,6 @@
-import {SupportedTechnologyId, Technology} from "@/models/technology";
+import {SupportedTechnologyId} from "@/models/technology";
 
-export type ProjectType = "web" | "mobile" | "ai" | "embedded" | "pcb_design";
+export type ProjectType = "web" | "mobile" | "ai" | "cli" | "embedded" | "pcb_design";
 
 export type Project = {
     type: ProjectType,

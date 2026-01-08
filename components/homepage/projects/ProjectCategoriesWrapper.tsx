@@ -6,7 +6,7 @@ import ProjectCategorySelector from "@/components/homepage/projects/ProjectCateg
 import ProjectsList from "@/components/homepage/projects/ProjectsList";
 
 export default function ProjectCategoriesWrapper() {
-    const [activeCategory, setActiveCategory] = useState<ProjectType>("web")
+    const [activeCategory, setActiveCategory] = useState<ProjectType>("cli")
 
     return <div className="space-y-10">
         <ProjectCategorySelector activeCategory={activeCategory} setActiveCategory={setActiveCategory} />

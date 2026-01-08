@@ -45,6 +45,12 @@ export const TECHNOLOGIES: Technology[] = [
         url: "https://golang.org"
     },
     {
+        id: "rust",
+        image: "https://www.vectorlogo.zone/logos/rust-lang/rust-lang-official.svg",
+        label: "Rust",
+        url: "https://rust-lang.org"
+    },
+    {
         id: "clang",
         image: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/c/c-original.svg",
         label: "Clang",
@@ -119,6 +125,16 @@ export const TECHNOLOGIES: Technology[] = [
 ]
 
 export const PROJECTS: Project[] = [
+    {
+        type: "cli",
+        technology_ids: ["rust"],
+        name: "DX - Developer Experience Toolkit",
+        description: {
+            en: "A fast, efficient command-line tool built with Rust to streamline common developer tasks.",
+            bg: "Бърз и ефикасен инструмент, създаден с Ръст, за да облекчи рутинни действия на програмиста"
+        },
+        githubURL: "https://github.com/ikok07/dxcli"
+    },
     {
         type: "web",
         technology_ids: ["nextjs", "clerk", "neondb", "stripe", "figma"],

@@ -16,6 +16,9 @@ export default function ProjectCategorySelector({activeCategory, setActiveCatego
     return <div className="mx-auto mt-10">
         <h4 className="text-center font-semibold mb-5">{t("chooseCategoryLabel")}</h4>
         <div className="flex items-center justify-center flex-wrap gap-5 w-full">
+            <ProjectCategoryButton category="cli" activeCategory={activeCategory} setActiveCategory={setActiveCategory}>
+                💻 CLI
+            </ProjectCategoryButton>
             <ProjectCategoryButton category="web" activeCategory={activeCategory} setActiveCategory={setActiveCategory}>
                 🌎 Web
             </ProjectCategoryButton>
